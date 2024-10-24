@@ -6,7 +6,5 @@ export const environment = {
     storageBucket: "woody-blast-test.appspot.com",
     messagingSenderId: "565831446885",
     appId: "1:565831446885:web:18d6211ac4c0021494f18c",
-  
-    measurementId: 'G-MEASUREMENT_ID',
   },
 };
