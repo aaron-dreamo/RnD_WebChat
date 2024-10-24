@@ -19,6 +19,6 @@ export const appConfig: ApplicationConfig = {
       provideStorage(() => getStorage()),
       provideMessaging(() => getMessaging())
     ),
-    provideRouter(routes), importProvidersFrom(provideFirebaseApp(() => initializeApp({"projectId":"woody-blast-test","appId":"1:565831446885:web:18d6211ac4c0021494f18c","storageBucket":"woody-blast-test.appspot.com","locationId":"asia-northeast3","apiKey":"AIzaSyCO5FtSCSOJuN1Ij1u-5358I6LEVyEg7wo","authDomain":"woody-blast-test.firebaseapp.com","messagingSenderId":"565831446885"}))), importProvidersFrom(provideAuth(() => getAuth())), importProvidersFrom(provideFirestore(() => getFirestore())), importProvidersFrom(provideMessaging(() => getMessaging())), importProvidersFrom(provideStorage(() => getStorage()))
+    provideRouter(routes), importProvidersFrom(provideFirebaseApp(() => initializeApp({"projectId":"woody-blast-test","appId":"1:565831446885:web:18d6211ac4c0021494f18c","storageBucket":"woody-blast-test.appspot.com","apiKey":"AIzaSyCO5FtSCSOJuN1Ij1u-5358I6LEVyEg7wo","authDomain":"woody-blast-test.firebaseapp.com","messagingSenderId":"565831446885"}))), importProvidersFrom(provideAuth(() => getAuth())), importProvidersFrom(provideFirestore(() => getFirestore())), importProvidersFrom(provideMessaging(() => getMessaging())), importProvidersFrom(provideStorage(() => getStorage()))
   ],
 };
