@@ -95,8 +95,6 @@ export class ChatService {
     textMessage: string | null,
     imageUrl: string | null
   ): Promise<void | DocumentReference<DocumentData>> => {
-    var i=0;
-    alert(i++);
     // ignore empty messages
     if (!textMessage && !imageUrl) {
       console.log(
@@ -107,13 +105,11 @@ export class ChatService {
       return;
     }
 
-    alert(i++);
     if (this.currentUser === null) {
       console.log("addMessage requires a signed-in user");
       return;
     }
 
-    alert(i++);
     const message: ChatMessage = {
       name: this.currentUser.displayName,
       profilePicUrl: this.currentUser.photoURL,
@@ -121,14 +117,10 @@ export class ChatService {
       uid: this.currentUser?.uid,
     };
 
-    alert(i++);
     textMessage && (message.text = textMessage);
     imageUrl && (message.imageUrl = imageUrl);
 
     try {
-      alert(i++);
-      alert(message.name);
-      alert(message.text);
       const newMessageRef = await addDoc(
         collection(this.firestore, "messages"),
         message,
@@ -138,7 +130,6 @@ export class ChatService {
       console.error("Error writing new message to Firebase Database", error);
       return;
     }
-    alert(i++);
   };
 
   // Saves a new message to Cloud Firestore.
@@ -148,7 +139,9 @@ export class ChatService {
 
   // Loads chat messages history and listens for upcoming ones.
   loadMessages = () => {
-    return null as unknown;
+    const recentMessagesQuery = query(collection(this.firestore, 'messages'), orderBy('timestamp', 'desc'), limit(12));
+    return collectionData(recentMessagesQuery);
+    // return null as unknown;
   };
 
   // Saves a new message containing an image in Firebase.
