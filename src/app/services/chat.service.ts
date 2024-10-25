@@ -74,29 +74,72 @@ export class ChatService {
   }
 
   // Login Friendly Chat.
-// Signs-in Friendly Chat.
-login() {
-  signInWithPopup(this.auth, this.provider).then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      this.router.navigate(['/', 'chat']);
-      return credential;
-  })
-}
+  login() {
+    signInWithPopup(this.auth, this.provider).then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        this.router.navigate(['/', 'chat']);
+        return credential;
+    })
+  }
   // Logout of Friendly Chat.
-// Logout of Friendly Chat.
-logout() {
-  signOut(this.auth).then(() => {
-      this.router.navigate(['/', 'login'])
-      console.log('signed out');
-  }).catch((error) => {
-      console.log('sign out error: ' + error);
-  })
-}
+  logout() {
+    signOut(this.auth).then(() => {
+        this.router.navigate(['/', 'login'])
+        console.log('signed out');
+    }).catch((error) => {
+        console.log('sign out error: ' + error);
+    })
+  }
   // Adds a text or image message to Cloud Firestore.
   addMessage = async (
     textMessage: string | null,
     imageUrl: string | null
-  ): Promise<void | DocumentReference<DocumentData>> => {};
+  ): Promise<void | DocumentReference<DocumentData>> => {
+    var i=0;
+    alert(i++);
+    // ignore empty messages
+    if (!textMessage && !imageUrl) {
+      console.log(
+        "addMessage was called without a message",
+        textMessage,
+        imageUrl,
+      );
+      return;
+    }
+
+    alert(i++);
+    if (this.currentUser === null) {
+      console.log("addMessage requires a signed-in user");
+      return;
+    }
+
+    alert(i++);
+    const message: ChatMessage = {
+      name: this.currentUser.displayName,
+      profilePicUrl: this.currentUser.photoURL,
+      timestamp: serverTimestamp(),
+      uid: this.currentUser?.uid,
+    };
+
+    alert(i++);
+    textMessage && (message.text = textMessage);
+    imageUrl && (message.imageUrl = imageUrl);
+
+    try {
+      alert(i++);
+      alert(message.name);
+      alert(message.text);
+      const newMessageRef = await addDoc(
+        collection(this.firestore, "messages"),
+        message,
+      );
+      return newMessageRef;
+    } catch (error) {
+      console.error("Error writing new message to Firebase Database", error);
+      return;
+    }
+    alert(i++);
+  };
 
   // Saves a new message to Cloud Firestore.
   saveTextMessage = async (messageText: string) => {
